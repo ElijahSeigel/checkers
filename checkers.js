@@ -151,8 +151,65 @@ function checkLanding(moves, jumps, piece, cx, cy, lx, ly) {
   * A function to apply the selected move to the game
   * @param {object} move - the move to apply.
   */
-function applyMove(move) {
-  // TODO: Apply the move
-  // TODO: Check for victory
-  // TODO: Start the next turn
+function applyMove(x, y, move) {
+  // TODO: Apply the move DONE
+	if(move.type==="slide"){
+		state.board[move.y][move.x] = state.board[y][x];
+		state.board[y][x] = null;
+	}
+	else
+	{
+		move.captures.foreach(function(square){
+			state.board[square.y][square.x]=null;
+		});
+		var index = move.landings.length-1;
+		state.board [move.landings[index].y][move.landings[index].x] = state.board[y][x];
+		state.board[y][x] = null;
+	}
+}
+
+/** @function nextTurn
+  * A function which swithces the turn variable in state
+  * to indicate a change in turn
+  */
+function nextTurn (){
+		if(state.turn === 'b') state.turn='w';
+		else state.turn='b';
+}
+
+function checkVictory (){
+	var wcount = 0;
+	var bcount = 0;
+	for (y=0; y<10; y++){
+		for (x=0; x<10; x++){
+			if (state.board[y][x] === "w" || state.board[y][x] === "wk") wcount ++;
+			if (state.board[y][x] === "b" || state.board[y][x] === "bk") bcount ++;
+		}
+	}
+	
+	if(wcount === 0)
+	{
+		state.over = true;
+		return'black wins';
+	}
+	if (bcount === 0)
+	{
+		state.over = true;
+		return'white wins';
+	}
+	
+	return false;
+}
+
+function printBoard(){
+	for (y=0; y<10; y++){
+		for (x=0; x<10; x++){
+			console.
+		}
+	}
+}
+
+function main()
+{
+	
 }
