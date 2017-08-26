@@ -186,7 +186,7 @@ function checkVictory (){
 			if (state.board[y][x] === "b" || state.board[y][x] === "bk") bcount ++;
 		}
 	}
-	
+
 	if(wcount === 0)
 	{
 		state.over = true;
@@ -197,19 +197,23 @@ function checkVictory (){
 		state.over = true;
 		return'white wins';
 	}
-	
+
 	return false;
 }
 
 function printBoard(){
-	for (y=0; y<10; y++){
-		for (x=0; x<10; x++){
-			console.
-		}
-	}
+  for (y=0; y<10; y++){
+  		for (x=0; x<10; x++){
+        if (state.board[y][x] != null)
+          console.log(state.board[y][x]);
+        else
+          console.log('_');
+  		}
+          console.log('\n');
+  	}
 }
 
 function main()
 {
-	
+
 }
