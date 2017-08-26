@@ -3,24 +3,24 @@
 /** The state of the game */
 var state = {
   over: false,
-  turn: 'b',
+  turn: 'bp',
   board: [
-    [null,'w',null,'w',null,'w',null,'w',null,'w'],
-    ['w',null,'w',null,'w',null,'w',null,'w',null],
-    [null,'w',null,'w',null,'w',null,'w',null,'w'],
+    [null,'wp',null,'wp',null,'wp',null,'wp',null,'wp'],
+    ['wp',null,'wp',null,'wp',null,'wp',null,'wp',null],
+    [null,'wp',null,'wp',null,'wp',null,'wp',null,'wp'],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
-    ['b',null,'b',null,'b',null,'b',null,'b',null],
-    [null,'b',null,'b',null,'b',null,'b',null,'b'],
-    ['b',null,'b',null,'b',null,'b',null,'b',null]
+    ['bp',null,'bp',null,'bp',null,'bp',null,'bp',null],
+    [null,'bp',null,'bp',null,'bp',null,'bp',null,'bp'],
+    ['bp',null,'bp',null,'bp',null,'bp',null,'bp',null]
   ]
 }
 
 /** @function getLegalMoves
   * returns a list of legal moves for the specified
   * piece to make.
-  * @param {String} piece - 'b' or 'w' for black or white pawns,
+  * @param {String} piece - 'bp' or 'wp' for black or white pawns,
   *    'bk' or 'wk' for white or black kings.
   * @param {integer} x - the x position of the piece on the board
   * @param {integer} y - the y position of the piece on the board
@@ -29,12 +29,12 @@ var state = {
 function getLegalMoves(piece, x, y) {
   var moves = [];
   switch(piece) {
-    case 'b': // black can only move down the board diagonally
+    case 'bp': // black can only move down the board diagonally
       checkSlide(moves, x-1, y+1);
       checkSlide(moves, x+1, y+1);
       checkJump(moves, {captures:[],landings:[]}, piece, x, y);
       break;
-    case 'w':  // white can only move up the board diagonally
+    case 'wp':  // white can only move up the board diagonally
       checkSlide(moves, x-1, y-1);
       checkSlide(moves, x+1, y-1);
       checkJump(moves, {captures:[],landings:[]}, piece, x, y);
@@ -88,18 +88,18 @@ function copyJumps(jumps) {
   * @param {Array} moves - the moves array
   * @param {Object} jumps - an object describing the
   *  prior jumps in this jump chain.
-  * @param {String} piece - 'b' or 'w' for black or white pawns,
+  * @param {String} piece - 'bp' or 'wp' for black or white pawns,
   *    'bk' or 'wk' for white or black kings
   * @param {integer} x - the current x position of the piece
   * @param {integer} y - the current y position of the peice
   */
 function checkJump(moves, jumps, piece, x, y) {
   switch(piece) {
-    case 'b': // black can only move down the board diagonally
+    case 'bp': // black can only move down the board diagonally
       checkLanding(moves, copyJumps(jumps), x-1, y+1, x-2, y+2);
       checkLanding(moves, copyJumps(jumps), x+1, y+1, x+2, y+2);
       break;
-    case 'w':  // white can only move up the board diagonally
+    case 'wp':  // white can only move up the board diagonally
       checkLanding(moves, copyJumps(jumps), x-1, y-1, x-2, y-2);
       checkLanding(moves, copyJumps(jumps), x+1, y-1, x+2, y-2);
       break;
@@ -120,7 +120,7 @@ function checkJump(moves, jumps, piece, x, y) {
   * @param {Array} moves - the moves array
   * @param {Object} jumps - an object describing the
   *  prior jumps in this jump chain.
-  * @param {String} piece - 'b' or 'w' for black or white pawns,
+  * @param {String} piece - 'bp' or 'wp' for black or white pawns,
   *    'bk' or 'wk' for white or black kings
   * @param {integer} cx - the 'capture' x position the piece is jumping over
   * @param {integer} cy - the 'capture' y position of the peice is jumping over
@@ -133,8 +133,8 @@ function checkLanding(moves, jumps, piece, cx, cy, lx, ly) {
   // Check landing square is unoccupied
   if(state.board[ly][lx]) return;
   // Check capture square is occuped by opponent
-  if(piece == 'b' || 'bk' && state.board[cy][cx] != 'w' || state.board[cy][cx] != 'wk') return;
-  if(piece == 'w' || 'wk' && state.board[cy][cx] != 'b' || state.board[cy][cx] != 'bk') return;
+  if(piece == 'bp' || 'bk' && state.board[cy][cx] != 'wp' || state.board[cy][cx] != 'wk') return;
+  if(piece == 'wp' || 'wk' && state.board[cy][cx] != 'bp' || state.board[cy][cx] != 'bk') return;
   // legal jump! add it to the moves list
   jumps.captures.push({x: cx, y: cy});
   jumps.landings.push({x: lx, y: ly});
@@ -173,8 +173,8 @@ function applyMove(x, y, move) {
   * to indicate a change in turn
   */
 function nextTurn (){
-		if(state.turn === 'b') state.turn='w';
-		else state.turn='b';
+		if(state.turn === 'bp') state.turn='wp';
+		else state.turn='bp';
 }
 
 function checkVictory (){
@@ -182,8 +182,8 @@ function checkVictory (){
 	var bcount = 0;
 	for (y=0; y<10; y++){
 		for (x=0; x<10; x++){
-			if (state.board[y][x] === "w" || state.board[y][x] === "wk") wcount ++;
-			if (state.board[y][x] === "b" || state.board[y][x] === "bk") bcount ++;
+			if (state.board[y][x] === "wp" || state.board[y][x] === "wk") wcount ++;
+			if (state.board[y][x] === "bp" || state.board[y][x] === "bk") bcount ++;
 		}
 	}
 
@@ -207,7 +207,7 @@ function printBoard(){
         if (state.board[y][x] != null)
           console.log(state.board[y][x]);
         else
-          console.log('_');
+          console.log('__');
   		}
           console.log('\n');
   	}
