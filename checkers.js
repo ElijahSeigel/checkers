@@ -1,4 +1,6 @@
 // checkers.js
+// Orginally Authored by Professor Nathan Bean
+// Edited by Elijah Seigel for CIS580
 
 /** The state of the game */
 var state = {
