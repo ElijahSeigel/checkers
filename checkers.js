@@ -179,6 +179,9 @@ function nextTurn (){
 		else state.turn='bp';
 }
 
+/** @function checkVictory
+  * A function which checks if a player has won, and updates state.over accordingly
+  */
 function checkVictory (){
 	var wcount = 0;
 	var bcount = 0;
@@ -203,6 +206,10 @@ function checkVictory (){
 	return false;
 }
 
+/** @function printBoard
+  * A function which prints the formatted 
+  * contents of state.board to console.log
+  */
 function printBoard(){
   for (y=0; y<10; y++){
   		for (x=0; x<10; x++){
